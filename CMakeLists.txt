@@ -12,6 +12,7 @@ add_executable(StudentAPI
     routes/disciplines.cpp
     routes/results.cpp
     routes/tests.cpp
+    routes/questions.cpp
     database/db_connection.cpp
 )
 
