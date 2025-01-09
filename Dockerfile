@@ -4,8 +4,11 @@ FROM gcc:12
 # Установка необходимых пакетов
 RUN apt-get update && apt-get install -y cmake libpqxx-dev git
 
+# Скачиваем и устанавливаем Crow
 RUN git clone https://github.com/CrowCpp/Crow.git /tmp/Crow && \
-    cp -r /tmp/Crow/include/crow /usr/local/include && \
+    mkdir -p /usr/local/include/crow && \
+    cp -r /tmp/Crow/include/crow/* /usr/local/include/crow/ && \
+    ls /usr/local/include/crow && \
     rm -rf /tmp/Crow
 
 # Устанавливаем рабочую директорию
