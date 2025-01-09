@@ -1,5 +1,5 @@
 #include <crow.h>
-#include "../database/db_connection.cpp"
+#include "../database/db_connection.h"
 
 void setup_results_routes(crow::SimpleApp& app) {
     // Сохранить результаты

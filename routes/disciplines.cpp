@@ -1,5 +1,6 @@
-#include <crow.h>
-#include "../database/db_connection.cpp"
+#include "disciplines.h"
+#include "../database/db_connection.h" // Включение для работы с БД
+#include <pqxx/pqxx> // Для работы с PostgreSQL
 
 void setup_disciplines_routes(crow::SimpleApp& app) {
     // Получить список дисциплин
@@ -18,7 +19,8 @@ void setup_disciplines_routes(crow::SimpleApp& app) {
                     discipline["id"] = row["id"].as<int>();
                     discipline["title"] = row["title"].c_str();
                     discipline["description"] = row["description"].c_str();
-                    response["disciplines"].push_back(discipline);
+response["disciplines"][response["disciplines"].size()] = std::move(discipline);
+
                 }
 
                 return crow::response(200, response);

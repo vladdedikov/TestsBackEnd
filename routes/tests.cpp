@@ -1,10 +1,10 @@
 #include <crow.h>
-#include "../database/db_connection.cpp"
+#include "../database/db_connection.h"
 
 void setup_tests_routes(crow::SimpleApp& app) {
     // Получить список тестов по дисциплине
     app.route_dynamic("/tests/<int>").methods("GET"_method)(
-        [](const crow::request& req, crow::response& res, int discipline_id) {
+        [](const crow::request& req, int discipline_id) {
             try {
                 pqxx::connection& conn = DBConnection::getInstance();
                 pqxx::work txn(conn);
@@ -17,17 +17,13 @@ void setup_tests_routes(crow::SimpleApp& app) {
                     crow::json::wvalue test;
                     test["id"] = row["id"].as<int>();
                     test["title"] = row["title"].c_str();
-                    response["tests"].push_back(test);
+response["tests"][response["tests"].size()] = std::move(test);
                 }
 
-                res.code = 200;
-                res.write(response.dump());
+                return crow::response(200, response);
             } catch (const std::exception& e) {
-                res.code = 500;
-                res.write(e.what());
+                return crow::response(500, e.what());
             }
-
-            res.end();
         });
 
     // Добавить новый тест

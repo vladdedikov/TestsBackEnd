@@ -1,7 +1,9 @@
 #include <crow.h>
-#include "routes/disciplines.cpp"
-#include "routes/tests.cpp"
-#include "routes/results.cpp"
+#include "routes/disciplines.h"
+#include "routes/tests.h"
+#include "routes/results.h"
+
+
 
 int main() {
     crow::SimpleApp app;

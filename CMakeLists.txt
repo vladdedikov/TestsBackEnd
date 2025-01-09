@@ -1,13 +1,23 @@
 cmake_minimum_required(VERSION 3.10)
+
 project(StudentAPI)
 
+# Укажите стандарт C++
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Указываем путь к заголовкам Crow
-include_directories(/usr/local/include)
+# Добавьте исходники проекта
+add_executable(StudentAPI
+    main.cpp
+    routes/disciplines.cpp
+    routes/results.cpp
+    routes/tests.cpp
+    database/db_connection.cpp
+)
 
-# Добавляем зависимости
-find_package(Threads REQUIRED)
-add_executable(StudentAPI main.cpp routes/disciplines.cpp routes/tests.cpp routes/results.cpp database/db_connection.cpp)
-target_include_directories(StudentAPI PUBLIC /usr/include)
-target_link_libraries(StudentAPI pqxx pthread)
+# Подключите библиотеки
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(PQXX REQUIRED libpqxx)
+
+target_include_directories(StudentAPI PRIVATE ${PQXX_INCLUDE_DIRS})
+target_link_libraries(StudentAPI ${PQXX_LIBRARIES})
