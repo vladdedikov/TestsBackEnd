@@ -1,0 +1,39 @@
+-- Таблица дисциплин
+CREATE TABLE disciplines (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Таблица тестов
+CREATE TABLE tests (
+    id SERIAL PRIMARY KEY,
+    discipline_id INT REFERENCES disciplines(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Таблица вопросов
+CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,
+    test_id INT REFERENCES tests(id) ON DELETE CASCADE,
+    content TEXT NOT NULL
+);
+
+-- Таблица ответов
+CREATE TABLE answers (
+    id SERIAL PRIMARY KEY,
+    question_id INT REFERENCES questions(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    is_correct BOOLEAN DEFAULT FALSE
+);
+
+-- Таблица результатов тестов
+CREATE TABLE results (
+    id SERIAL PRIMARY KEY,
+    test_id INT REFERENCES tests(id),
+    username VARCHAR(255) NOT NULL,
+    score INT NOT NULL,
+    completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
