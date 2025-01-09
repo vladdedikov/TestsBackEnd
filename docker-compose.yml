@@ -16,7 +16,7 @@ services:
 
   db:  # PostgreSQL сервис
     image: postgres:15
-    container_name: postgres-container
+    container_name: postgres-container-new
     environment:
       POSTGRES_USER: your_user
       POSTGRES_PASSWORD: your_password
