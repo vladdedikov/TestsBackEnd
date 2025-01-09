@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  app:  
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db  # PostgreSQL контейнер
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: your_user
+      DB_PASSWORD: your_password
+      DB_NAME: student_api
+
+  db:  # PostgreSQL сервис
+    image: postgres:15
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: student_api
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}
