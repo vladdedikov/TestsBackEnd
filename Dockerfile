@@ -1,8 +1,12 @@
 # Базовый образ
 FROM gcc:12
 
-# Устанавливаем необходимые зависимости
-RUN apt-get update && apt-get install -y cmake libpqxx-dev
+# Установка необходимых пакетов
+RUN apt-get update && apt-get install -y cmake libpqxx-dev git
+
+RUN git clone https://github.com/CrowCpp/Crow.git /tmp/Crow && \
+    cp -r /tmp/Crow/include/crow /usr/local/include && \
+    rm -rf /tmp/Crow
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -16,5 +20,5 @@ RUN cmake . && make
 # Экспонируем порт
 EXPOSE 8080
 
-# Запускаем приложение
+# Запуск приложения
 CMD ["./StudentAPI"]
